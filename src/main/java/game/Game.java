@@ -8,95 +8,102 @@ public class Game {
     private Scanner input = new Scanner(System.in);
     private Random random = new Random();
 
+    private ScoreBoard score;
+
     public void play() {
         //start game
-        System.out.println("Let's play Rock, Paper, Scissors!");
-        System.out.println("Say \"Rock\", \"Paper\", or \"Scissors\" to indicate your choice. Otherwise say \"Quit\" to quit.");
-        String choice = input.nextLine(); //prompt response
-        choice = choice.toLowerCase(); //change to lowercase for consistency
+        printGameRules();
 
         //initialize variables
-        int tienum = 0;
-        int winnum = 0;
-        int lossnum = 0;
+        score = new ScoreBoard();
 
-        while (!choice.equals("quit")) //do the following if the user does not put in "quit"
+        String choice;
+
+        do //do the following if the user does not put in "quit"
         {
-            int choicenum = 0;
-            if (choice.equals("rock")) //assign numbers to string
-            {
-                choicenum = 1;
-            }
-            else if (choice.equals("paper")) //assign numbers to string
-            {
-                choicenum = 2;
-            }
-            else if (choice.equals("scissors"))//assign numbers to string
-            {
-                choicenum = 3;
-            }
-            else //not valid responses
-            {
-                while(choicenum == 0) //continue while user input is still not valid
-                {
-                    System.out.println("Sorry, it looks like you didn't enter a correct input. Try again.");
-                    choice = input.nextLine();
-                    choice = choice.toLowerCase();
-                    if (choice.equals("rock"))
-                    {
-                        choicenum = 1;
-                    }
-                    else if (choice.equals("paper"))
-                    {
-                        choicenum = 2;
-                    }
-                    else if (choice.equals("scissors"))
-                    {
-                        choicenum = 3;
-                    }
-                    else if (choice.equals("quit"))
-                        System.exit(0); //quit program
-                }
-            }
-            int compnum = (int) (random.nextInt(3)) + 1;//computer generate random num
-            //print computer choice
-            if (compnum == 1) System.out.println("Computer chose rock");
-            if (compnum == 2) System.out.println("Computer chose paper");
-            if (compnum == 3) System.out.println("Computer chose scissors");
+            choice = input.nextLine().toUpperCase(); //prompt response in lowercase for consistency
+            GameOption choiceNum = getChoiceCode(choice);
 
+             //not valid responses
+            if(choiceNum == null) //continue while user input is still not valid
+            {
+                print("Sorry, it looks like you didn't enter a correct input. Try again.");
+            } else {
 
-            if(choicenum == compnum) //tie cases
-            {
-                System.out.println("It's a tie");
-                tienum++;
+                GameOption compNum = getComputerChoice();
+
+                evaluateChoices(choiceNum, compNum, score);
+
+                printGameRules();
+
+                choice = input.nextLine().toUpperCase(); //prompt for new user input
             }
-            else if (choicenum == 1 && compnum == 3) //user wins rock vs scissors
-            {
-                System.out.println("you win!");
-                winnum++;
-            }
-            else if (choicenum == 3 && compnum == 2) //user wins scissors vs paper
-            {
-                System.out.println("you win!");
-                winnum++;
-            }
-            else if (choicenum == 2 && compnum ==1) //user wins paper vs rock
-            {
-                System.out.println("you win!");
-                winnum++;
-            }
-            else //otherwise computer wins
-            {
-                System.out.println("you lose.");
-                lossnum++;
-            }
-            System.out.println("wins:" + winnum + "\nloses:" + lossnum + "\nties:" + tienum); //print out number of wins, ties, and loses
-            System.out.println("Let's play again! \n \n"); //start game again
-            System.out.println("Say \"Rock\", \"Paper\", or \"Scissors\" to indicate your choice. Otherwise say \"Quit\" to quit.");
-            choice = input.nextLine(); //prompt for new user input
-            choice = choice.toLowerCase();
+        } while (!choice.equals("QUIT"));
+
+    }
+
+    private void evaluateChoices(GameOption choiceNum, GameOption compNum, ScoreBoard score) {
+        if(choiceNum == compNum) { //tie cases
+
+            whenTie();
         }
-        if(choice.equals("quit")) //if user prints "quit", then quit program
-            return;
+        else if (   choiceNum == GameOption.ROCK && compNum == GameOption.SCISSORS
+                ||  choiceNum == GameOption.SCISSORS && compNum == GameOption.PAPER
+                ||  choiceNum == GameOption.PAPER && compNum == GameOption.ROCK ) { //user wins paper vs rock
+            whenWins();
+        }
+        else { //otherwise computer wins
+            whenLose();
+        }
+
+        print("wins:" + score.getWins() + "\nloses:" + score.getLoses() + "\nties:" + score.getTie()); //print out number of wins, ties, and loses
+    }
+
+    private void whenTie() {
+        print("It's a tie");
+        score.incrementTie();
+    }
+
+    private void whenLose() {
+        print("you lose.");
+        score.incrementLoses();
+    }
+
+    private void whenWins() {
+        print("you win!");
+        score.incrementWins();
+    }
+
+    private GameOption getChoiceCode(String choice) {
+        choice = choice.toUpperCase();
+
+        if(choice.equals("QUIT")) System.exit(0); //quit program
+
+        GameOption option;
+
+        try {
+            option = GameOption.valueOf(choice);
+        } catch (Exception e) {
+            return null;
+        }
+
+        return option;
+    }
+
+    private GameOption getComputerChoice() {
+        GameOption option = GameOption.values()[ (random.nextInt(3)) ];//computer generate random num
+
+        print("Computer chose " + option.toString().toLowerCase());
+
+        return option;
+    }
+
+    private void printGameRules() {
+        print("Let's play Rock, Paper, Scissors!");
+        print("Say \"Rock\", \"Paper\", or \"Scissors\" to indicate your choice. Otherwise say \"Quit\" to quit.");
+    }
+
+    private void print(String message){
+        System.out.println(message);
     }
 }
