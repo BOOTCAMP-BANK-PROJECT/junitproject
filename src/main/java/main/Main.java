@@ -1,14 +1,14 @@
 package main;
 
-import money.MoneyUtil;
+import game.Game;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        double salary = 1000;
+        Game game = new Game();
+        game.play();
 
-        System.out.println(MoneyUtil.formatDollar(salary));
     }
 
 }
