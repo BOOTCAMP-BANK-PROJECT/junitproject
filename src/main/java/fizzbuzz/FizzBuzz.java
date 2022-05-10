@@ -21,14 +21,12 @@ public class FizzBuzz {
 
     private String evaluate(int number) {
 
-        String eval = "";
+        if(number%3 == 0 && number%5 == 0) return FIZZ+BUZZ;
 
-        if(number%3 == 0) eval += FIZZ;
+        if(number%3 == 0) return FIZZ;
 
-        if(number%5 == 0) eval += BUZZ;
+        if(number%5 == 0) return BUZZ;
 
-        if(eval == "") eval = String.valueOf(number);
-
-        return eval;
+        return String.valueOf(number);
     }
 }
