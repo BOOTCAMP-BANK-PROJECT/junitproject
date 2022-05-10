@@ -1,4 +1,6 @@
-package money;
+package main;
+
+import money.MoneyUtil;
 
 public class Main {
 

@@ -2,5 +2,5 @@ projectKey=org.example:junitproject
 serverUrl=http://localhost:9000
 serverVersion=9.4.0.54424
 dashboardUrl=http://localhost:9000/dashboard?id=org.example%3Ajunitproject
-ceTaskId=AYCviamh6FZOQsVa1ugG
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYCviamh6FZOQsVa1ugG
+ceTaskId=AYCvuY8I6FZOQsVa1ugH
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYCvuY8I6FZOQsVa1ugH

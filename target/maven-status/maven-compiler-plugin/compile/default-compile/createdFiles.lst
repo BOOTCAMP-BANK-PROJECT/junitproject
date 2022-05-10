@@ -1,3 +1,4 @@
-money\Main.class
+game\Game.class
 money\MoneyUtil.class
 fizzbuzz\FizzBuzz.class
+main\Main.class

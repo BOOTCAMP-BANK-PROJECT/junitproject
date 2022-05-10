@@ -4,15 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 <span class="fc" id="L6">public class FizzBuzz {</span>
+
+<span class="fc" id="L8">    private final String FIZZ = &quot;Fizz&quot;;</span>
+<span class="fc" id="L9">    private final String BUZZ = &quot;Buzz&quot;;</span>
+
     public List&lt;String&gt; getNumbers(int max) {
 
-<span class="fc" id="L9">        List&lt;String&gt; numbers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L13">        List&lt;String&gt; numbers = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L11" title="All 2 branches covered.">        for (int i = 1; i &lt;= max; i++) {</span>
-<span class="fc" id="L12">            numbers.add(String.valueOf(i));</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        for (int i = 1; i &lt;= max; i++) {</span>
+<span class="fc" id="L16">            numbers.add(evaluate(i));</span>
         }
 
-<span class="fc" id="L15">        return numbers;</span>
+<span class="fc" id="L19">        return numbers;</span>
+    }
+
+    private String evaluate(int number) {
+
+<span class="fc bfc" id="L24" title="All 4 branches covered.">        if(number%3 == 0 &amp;&amp; number%5 == 0) return FIZZ+BUZZ;</span>
+
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if(number%3 == 0) return FIZZ;</span>
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if(number%5 == 0) return BUZZ;</span>
+
+<span class="fc" id="L30">        return String.valueOf(number);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
