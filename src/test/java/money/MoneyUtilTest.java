@@ -1,6 +1,5 @@
 package money;
 
-import money.MoneyUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
