@@ -1,103 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">junitproject</a> &gt; <a href="index.source.html" class="el_package">game</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package game;
 
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.Scanner;
 
-<span class="nc" id="L6">public class Game {</span>
+<span class="fc" id="L6">public class Game {</span>
 
-<span class="nc" id="L8">    private Scanner input = new Scanner(System.in);</span>
-<span class="nc" id="L9">    private Random random = new Random();</span>
+<span class="fc" id="L8">    private Scanner input = new Scanner(System.in);</span>
+<span class="fc" id="L9">    private SecureRandom random = new SecureRandom ();</span>
+
+    private ScoreBoard score;
 
     public void play() {
         //start game
-<span class="nc" id="L13">        System.out.println(&quot;Let's play Rock, Paper, Scissors!&quot;);</span>
-<span class="nc" id="L14">        System.out.println(&quot;Say \&quot;Rock\&quot;, \&quot;Paper\&quot;, or \&quot;Scissors\&quot; to indicate your choice. Otherwise say \&quot;Quit\&quot; to quit.&quot;);</span>
-<span class="nc" id="L15">        String choice = input.nextLine(); //prompt response</span>
-<span class="nc" id="L16">        choice = choice.toLowerCase(); //change to lowercase for consistency</span>
+<span class="fc" id="L15">        printGameRules();</span>
 
         //initialize variables
-<span class="nc" id="L19">        int tienum = 0;</span>
-<span class="nc" id="L20">        int winnum = 0;</span>
-<span class="nc" id="L21">        int lossnum = 0;</span>
+<span class="fc" id="L18">        score = new ScoreBoard();</span>
 
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        while (!choice.equals(&quot;quit&quot;)) //do the following if the user does not put in &quot;quit&quot;</span>
+        String choice;
+
+        do //do the following if the user does not put in &quot;quit&quot;
         {
-<span class="nc" id="L25">            int choicenum = 0;</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (choice.equals(&quot;rock&quot;)) //assign numbers to string</span>
-            {
-<span class="nc" id="L28">                choicenum = 1;</span>
-            }
-<span class="nc bnc" id="L30" title="All 2 branches missed.">            else if (choice.equals(&quot;paper&quot;)) //assign numbers to string</span>
-            {
-<span class="nc" id="L32">                choicenum = 2;</span>
-            }
-<span class="nc bnc" id="L34" title="All 2 branches missed.">            else if (choice.equals(&quot;scissors&quot;))//assign numbers to string</span>
-            {
-<span class="nc" id="L36">                choicenum = 3;</span>
-            }
-            else //not valid responses
-            {
-<span class="nc bnc" id="L40" title="All 2 branches missed.">                while(choicenum == 0) //continue while user input is still not valid</span>
-                {
-<span class="nc" id="L42">                    System.out.println(&quot;Sorry, it looks like you didn't enter a correct input. Try again.&quot;);</span>
-<span class="nc" id="L43">                    choice = input.nextLine();</span>
-<span class="nc" id="L44">                    choice = choice.toLowerCase();</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">                    if (choice.equals(&quot;rock&quot;))</span>
-                    {
-<span class="nc" id="L47">                        choicenum = 1;</span>
-                    }
-<span class="nc bnc" id="L49" title="All 2 branches missed.">                    else if (choice.equals(&quot;paper&quot;))</span>
-                    {
-<span class="nc" id="L51">                        choicenum = 2;</span>
-                    }
-<span class="nc bnc" id="L53" title="All 2 branches missed.">                    else if (choice.equals(&quot;scissors&quot;))</span>
-                    {
-<span class="nc" id="L55">                        choicenum = 3;</span>
-                    }
-<span class="nc bnc" id="L57" title="All 2 branches missed.">                    else if (choice.equals(&quot;quit&quot;))</span>
-<span class="nc" id="L58">                        System.exit(0); //quit program</span>
-                }
-            }
-<span class="nc" id="L61">            int compnum = (int) (random.nextInt(3)) + 1;//computer generate random num</span>
-            //print computer choice
-<span class="nc bnc" id="L63" title="All 2 branches missed.">            if (compnum == 1) System.out.println(&quot;Computer chose rock&quot;);</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">            if (compnum == 2) System.out.println(&quot;Computer chose paper&quot;);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (compnum == 3) System.out.println(&quot;Computer chose scissors&quot;);</span>
+<span class="fc" id="L24">            choice = input.nextLine().toUpperCase(); //prompt response in lowercase for consistency</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">            if(choice.equals(&quot;QUIT&quot;)) break; //quit program</span>
 
+<span class="fc" id="L27">            GameOption choiceNum = getChoiceCode(choice);</span>
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">            if(choicenum == compnum) //tie cases</span>
+             //not valid responses
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">            if(choiceNum == null) //continue while user input is still not valid</span>
             {
-<span class="nc" id="L70">                System.out.println(&quot;It's a tie&quot;);</span>
-<span class="nc" id="L71">                tienum++;</span>
+<span class="nc" id="L32">                print(&quot;Sorry, it looks like you didn't enter a correct input. Try again.&quot;);</span>
+            } else {
+
+<span class="fc" id="L35">                GameOption compNum = getComputerChoice();</span>
+
+<span class="fc" id="L37">                evaluateChoices(choiceNum, compNum, score);</span>
+
+<span class="fc" id="L39">                printGameRules();</span>
+
+<span class="fc" id="L41">                choice = input.nextLine().toUpperCase(); //prompt for new user input</span>
             }
-<span class="nc bnc" id="L73" title="All 4 branches missed.">            else if (choicenum == 1 &amp;&amp; compnum == 3) //user wins rock vs scissors</span>
-            {
-<span class="nc" id="L75">                System.out.println(&quot;you win!&quot;);</span>
-<span class="nc" id="L76">                winnum++;</span>
-            }
-<span class="nc bnc" id="L78" title="All 4 branches missed.">            else if (choicenum == 3 &amp;&amp; compnum == 2) //user wins scissors vs paper</span>
-            {
-<span class="nc" id="L80">                System.out.println(&quot;you win!&quot;);</span>
-<span class="nc" id="L81">                winnum++;</span>
-            }
-<span class="nc bnc" id="L83" title="All 4 branches missed.">            else if (choicenum == 2 &amp;&amp; compnum ==1) //user wins paper vs rock</span>
-            {
-<span class="nc" id="L85">                System.out.println(&quot;you win!&quot;);</span>
-<span class="nc" id="L86">                winnum++;</span>
-            }
-            else //otherwise computer wins
-            {
-<span class="nc" id="L90">                System.out.println(&quot;you lose.&quot;);</span>
-<span class="nc" id="L91">                lossnum++;</span>
-            }
-<span class="nc" id="L93">            System.out.println(&quot;wins:&quot; + winnum + &quot;\nloses:&quot; + lossnum + &quot;\nties:&quot; + tienum); //print out number of wins, ties, and loses</span>
-<span class="nc" id="L94">            System.out.println(&quot;Let's play again! \n \n&quot;); //start game again</span>
-<span class="nc" id="L95">            System.out.println(&quot;Say \&quot;Rock\&quot;, \&quot;Paper\&quot;, or \&quot;Scissors\&quot; to indicate your choice. Otherwise say \&quot;Quit\&quot; to quit.&quot;);</span>
-<span class="nc" id="L96">            choice = input.nextLine(); //prompt for new user input</span>
-<span class="nc" id="L97">            choice = choice.toLowerCase();</span>
-<span class="nc" id="L98">        }</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if(choice.equals(&quot;quit&quot;)) //if user prints &quot;quit&quot;, then quit program</span>
-<span class="nc" id="L100">            return;</span>
-<span class="nc" id="L101">    }</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        } while (!choice.equals(&quot;QUIT&quot;));</span>
+
+<span class="fc" id="L45">    }</span>
+
+    private void evaluateChoices(GameOption choiceNum, GameOption compNum, ScoreBoard score) {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(choiceNum == compNum) { //tie cases</span>
+
+<span class="fc" id="L50">            whenTie();</span>
+        }
+<span class="pc bpc" id="L52" title="2 of 12 branches missed.">        else if (   choiceNum == GameOption.ROCK &amp;&amp; compNum == GameOption.SCISSORS</span>
+                ||  choiceNum == GameOption.SCISSORS &amp;&amp; compNum == GameOption.PAPER
+                ||  choiceNum == GameOption.PAPER &amp;&amp; compNum == GameOption.ROCK ) { //user wins paper vs rock
+<span class="fc" id="L55">            whenWins();</span>
+        }
+        else { //otherwise computer wins
+<span class="fc" id="L58">            whenLose();</span>
+        }
+
+<span class="fc" id="L61">        print(&quot;wins:&quot; + score.getWins() + &quot;\nloses:&quot; + score.getLoses() + &quot;\nties:&quot; + score.getTie()); //print out number of wins, ties, and loses</span>
+<span class="fc" id="L62">    }</span>
+
+    private void whenTie() {
+<span class="fc" id="L65">        print(&quot;It's a tie&quot;);</span>
+<span class="fc" id="L66">        score.incrementTie();</span>
+<span class="fc" id="L67">    }</span>
+
+    private void whenLose() {
+<span class="fc" id="L70">        print(&quot;you lose.&quot;);</span>
+<span class="fc" id="L71">        score.incrementLoses();</span>
+<span class="fc" id="L72">    }</span>
+
+    private void whenWins() {
+<span class="fc" id="L75">        print(&quot;you win!&quot;);</span>
+<span class="fc" id="L76">        score.incrementWins();</span>
+<span class="fc" id="L77">    }</span>
+
+    private GameOption getChoiceCode(String choice) {
+        GameOption option;
+
+        try {
+<span class="fc" id="L83">            option = GameOption.valueOf(choice);</span>
+<span class="nc" id="L84">        } catch (Exception e) {</span>
+<span class="nc" id="L85">            return null;</span>
+<span class="fc" id="L86">        }</span>
+
+<span class="fc" id="L88">        return option;</span>
+    }
+
+    private GameOption getComputerChoice() {
+<span class="fc" id="L92">        GameOption option = GameOption.values()[ (random.nextInt(3)) ];//computer generate random num</span>
+
+<span class="fc" id="L94">        print(&quot;Computer chose &quot; + option.toString().toLowerCase());</span>
+
+<span class="fc" id="L96">        return option;</span>
+    }
+
+    private void printGameRules() {
+<span class="fc" id="L100">        print(&quot;Let's play Rock, Paper, Scissors!&quot;);</span>
+<span class="fc" id="L101">        print(&quot;Say \&quot;Rock\&quot;, \&quot;Paper\&quot;, or \&quot;Scissors\&quot; to indicate your choice. Otherwise say \&quot;Quit\&quot; to quit.&quot;);</span>
+<span class="fc" id="L102">    }</span>
+
+    private void print(String message){
+<span class="fc" id="L105">        System.out.println(message);</span>
+<span class="fc" id="L106">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

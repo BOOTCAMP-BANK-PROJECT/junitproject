@@ -1,12 +1,12 @@
 package game;
 
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class Game {
 
     private Scanner input = new Scanner(System.in);
-    private Random random = new Random();
+    private SecureRandom random = new SecureRandom ();
 
     private ScoreBoard score;
 
@@ -22,6 +22,8 @@ public class Game {
         do //do the following if the user does not put in "quit"
         {
             choice = input.nextLine().toUpperCase(); //prompt response in lowercase for consistency
+            if(choice.equals("QUIT")) break; //quit program
+
             GameOption choiceNum = getChoiceCode(choice);
 
              //not valid responses
@@ -75,10 +77,6 @@ public class Game {
     }
 
     private GameOption getChoiceCode(String choice) {
-        choice = choice.toUpperCase();
-
-        if(choice.equals("QUIT")) System.exit(0); //quit program
-
         GameOption option;
 
         try {

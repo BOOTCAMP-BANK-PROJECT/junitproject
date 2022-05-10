@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.Scanner;
 
 import static org.mockito.Mockito.when;
@@ -25,7 +25,7 @@ public class GameTest {
     Scanner scanner;
 
     @Mock
-    Random random;
+    SecureRandom random;
 
     private final int OPTION_ROCK = 0;
     private final int OPTION_PAPER = 1;

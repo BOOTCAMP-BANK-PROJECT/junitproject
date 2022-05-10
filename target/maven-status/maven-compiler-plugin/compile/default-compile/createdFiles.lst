@@ -1,4 +1,6 @@
 game\Game.class
 money\MoneyUtil.class
 fizzbuzz\FizzBuzz.class
+game\GameOption.class
 main\Main.class
+game\ScoreBoard.class
