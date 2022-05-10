@@ -1,3 +1,6 @@
+package money;
+
+import money.MoneyUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,6 +36,11 @@ public class MoneyUtilTest {
         String expected = "-$350.35";
 
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void notNullExceptionMoneyTest() {
+       MoneyUtil.format(null, -350.353);
     }
 
 }
