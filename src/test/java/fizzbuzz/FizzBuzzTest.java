@@ -49,7 +49,7 @@ public class FizzBuzzTest {
         Assert.assertEquals(key_word, numbersList.get(4));
         Assert.assertEquals(key_word, numbersList.get(9));
         Assert.assertEquals(key_word, numbersList.get(19));
-        Assert.assertEquals(key_word, numbersList.get(25));
+        Assert.assertEquals(key_word, numbersList.get(24));
     }
 
     @Test
